@@ -1,0 +1,741 @@
+{
+  "MachineId": "dcfd2e53-f75c-4c9b-85bd-e320edcffb29",
+  "User": "CAISSA\\Josevi",
+  "SentOn": "2015-05-13T16:23:59.7502134+02:00",
+  "InstalledRam": 16384,
+  "Domain": "europe.microsoft.com.corp",
+  "ComputerName": "CAISSA",
+  "Data": [
+    {
+      "SampleDate": "2015-05-13T16:23:49.7502134+02:00",
+      "Properties": {
+        "CPU": {
+          "Value": 23,
+          "Average": 45,
+          "Max": 100,
+          "Min": 3,
+          "SampleType": 3
+        },
+        "UsedRAM": {
+          "Value": 2789,
+          "Average": 2565,
+          "Max": 7881,
+          "Min": 1872,
+          "SampleType": 3
+        },
+        "BootDuration": {
+          "Value": 34,
+          "Average": 0,
+          "Max": 0,
+          "Min": 0,
+          "SampleType": 3
+        },
+        "UpTime": {
+          "Value": 25698,
+          "Average": 0,
+          "Max": 0,
+          "Min": 0,
+          "SampleType": 3
+        },
+        "DiskWriteMBPerSecond": {
+          "Value": 2789.23,
+          "Average": 2565.23,
+          "Max": 7881.23,
+          "Min": 1872.23,
+          "SampleType": 0
+        },
+        "DiskReadMBPerSecond": {
+          "Value": 2789.23,
+          "Average": 2565.23,
+          "Max": 7881.23,
+          "Min": 1872.23,
+          "SampleType": 0
+        },
+        "DiskReadLatency": {
+          "Value": 2789.23,
+          "Average": 2565.23,
+          "Max": 7881.23,
+          "Min": 1872.23,
+          "SampleType": 0
+        },
+        "DiskWriteLatency": {
+          "Value": 2789.23,
+          "Average": 2565.23,
+          "Max": 7881.23,
+          "Min": 1872.23,
+          "SampleType": 0
+        },
+        "DiskAverageLatency": {
+          "Value": 2789.23,
+          "Average": 2565.23,
+          "Max": 7881.23,
+          "Min": 1872.23,
+          "SampleType": 0
+        },
+        "Proxy": {
+          "Value": "proxy.com",
+          "SampleType": 2
+        },
+        "LanInformationArray": {
+          "Array": [
+            {
+              "InterfaceName": "Ethernet 1",
+              "Connected": true,
+              "IPAddress": "192.168.10.86",
+              "BytesSent": 456456,
+              "BytesReceived": 23423,
+              "SampleType": 5
+            },
+            {
+              "InterfaceName": "Ethernet 2",
+              "Connected": true,
+              "IPAddress": "10.1.1.34",
+              "BytesSent": 4564564564564566565,
+              "BytesReceived": 3544564563,
+              "SampleType": 5
+            }
+          ],
+          "SampleType": 6
+        },
+        "SharedResourceArray": {
+          "Array": [
+            {
+              "DriveLetter": "Z:",
+              "ResourceName": "\\\\server\\drive1",
+              "ResponseTime": 245,
+              "SampleType": 7
+            },
+            {
+              "DriveLetter": "Y:",
+              "ResourceName": "\\\\server\\drive2",
+              "ResponseTime": 312,
+              "SampleType": 7
+            }
+          ],
+          "SampleType": 8
+        },
+        "SharedServiceInformationArray": {
+          "Array": [
+            {
+              "ServiceName": "Lync 2013",
+              "ServiceUrl": "http://lyncserver.bancosantander.corp",
+              "ResponseTime": 567,
+              "SampleType": 9
+            },
+            {
+              "ServiceName": "Exchange 2013",
+              "ServiceUrl": "http://exchange.bancosantander.corp",
+              "ResponseTime": 278,
+              "SampleType": 9
+            }
+          ],
+          "SampleType": 10
+        },
+        "WiFiConnected": {
+          "Value": true,
+          "SampleType": 1
+        },
+        "WiFiSSID": {
+          "Value": "GSNETWLAN01",
+          "SampleType": 2
+        },
+        "WiFiSignalStrength": {
+          "Value": 89,
+          "Average": 0,
+          "Max": 0,
+          "Min": 0,
+          "SampleType": 3
+        },
+        "WiFiIPAddress": {
+          "Value": "10.4.0.56",
+          "SampleType": 2
+        },
+        "WiFiEncryptionAlgorithm": {
+          "Value": "WPA2",
+          "SampleType": 2
+        },
+        "WiFiProtocol": {
+          "Value": "802.11n",
+          "SampleType": 2
+        },
+        "WiFiBytesSent": {
+          "Value": 892393945,
+          "SampleType": 4
+        },
+        "WiFiBytesReceived": {
+          "Value": 467567567567567,
+          "SampleType": 4
+        }
+      },
+      "State": 37,
+      "Message": null,
+      "ContainsFeedback": false,
+      "UserMood": null
+    },
+    {
+      "SampleDate": "2015-05-13T16:23:44.7502134+02:00",
+      "Properties": {
+        "CPU": {
+          "Value": 23,
+          "Average": 45,
+          "Max": 100,
+          "Min": 3,
+          "SampleType": 3
+        },
+        "UsedRAM": {
+          "Value": 2789,
+          "Average": 2565,
+          "Max": 7881,
+          "Min": 1872,
+          "SampleType": 3
+        },
+        "BootDuration": {
+          "Value": 34,
+          "Average": 0,
+          "Max": 0,
+          "Min": 0,
+          "SampleType": 3
+        },
+        "UpTime": {
+          "Value": 25698,
+          "Average": 0,
+          "Max": 0,
+          "Min": 0,
+          "SampleType": 3
+        },
+        "DiskWriteMBPerSecond": {
+          "Value": 2789.23,
+          "Average": 2565.23,
+          "Max": 7881.23,
+          "Min": 1872.23,
+          "SampleType": 0
+        },
+        "DiskReadMBPerSecond": {
+          "Value": 2789.23,
+          "Average": 2565.23,
+          "Max": 7881.23,
+          "Min": 1872.23,
+          "SampleType": 0
+        },
+        "DiskReadLatency": {
+          "Value": 2789.23,
+          "Average": 2565.23,
+          "Max": 7881.23,
+          "Min": 1872.23,
+          "SampleType": 0
+        },
+        "DiskWriteLatency": {
+          "Value": 2789.23,
+          "Average": 2565.23,
+          "Max": 7881.23,
+          "Min": 1872.23,
+          "SampleType": 0
+        },
+        "DiskAverageLatency": {
+          "Value": 2789.23,
+          "Average": 2565.23,
+          "Max": 7881.23,
+          "Min": 1872.23,
+          "SampleType": 0
+        },
+        "Proxy": {
+          "Value": "proxy.com",
+          "SampleType": 2
+        },
+        "LanInformationArray": {
+          "Array": [
+            {
+              "InterfaceName": "Ethernet 1",
+              "Connected": true,
+              "IPAddress": "192.168.10.86",
+              "BytesSent": 456456,
+              "BytesReceived": 23423,
+              "SampleType": 5
+            },
+            {
+              "InterfaceName": "Ethernet 2",
+              "Connected": true,
+              "IPAddress": "10.1.1.34",
+              "BytesSent": 4564564564564566565,
+              "BytesReceived": 3544564563,
+              "SampleType": 5
+            }
+          ],
+          "SampleType": 6
+        },
+        "SharedResourceArray": {
+          "Array": [
+            {
+              "DriveLetter": "Z:",
+              "ResourceName": "\\\\server\\drive1",
+              "ResponseTime": 245,
+              "SampleType": 7
+            },
+            {
+              "DriveLetter": "Y:",
+              "ResourceName": "\\\\server\\drive2",
+              "ResponseTime": 312,
+              "SampleType": 7
+            }
+          ],
+          "SampleType": 8
+        },
+        "SharedServiceInformationArray": {
+          "Array": [
+            {
+              "ServiceName": "Lync 2013",
+              "ServiceUrl": "http://lyncserver.bancosantander.corp",
+              "ResponseTime": 567,
+              "SampleType": 9
+            },
+            {
+              "ServiceName": "Exchange 2013",
+              "ServiceUrl": "http://exchange.bancosantander.corp",
+              "ResponseTime": 278,
+              "SampleType": 9
+            }
+          ],
+          "SampleType": 10
+        },
+        "WiFiConnected": {
+          "Value": true,
+          "SampleType": 1
+        },
+        "WiFiSSID": {
+          "Value": "GSNETWLAN01",
+          "SampleType": 2
+        },
+        "WiFiSignalStrength": {
+          "Value": 89,
+          "Average": 0,
+          "Max": 0,
+          "Min": 0,
+          "SampleType": 3
+        },
+        "WiFiIPAddress": {
+          "Value": "10.4.0.56",
+          "SampleType": 2
+        },
+        "WiFiEncryptionAlgorithm": {
+          "Value": "WPA2",
+          "SampleType": 2
+        },
+        "WiFiProtocol": {
+          "Value": "802.11n",
+          "SampleType": 2
+        },
+        "WiFiBytesSent": {
+          "Value": 892393945,
+          "SampleType": 4
+        },
+        "WiFiBytesReceived": {
+          "Value": 467567567567567,
+          "SampleType": 4
+        }
+      },
+      "State": 37,
+      "Message": "No me funciona el correo",
+      "ContainsFeedback": true,
+      "UserMood": "KO"
+    }
+  ]
+}{
+"MachineId": "dcfd2e53-f75c-4c9b-85bd-e320edcffb29",
+"User": "CAISSA\\Josevi",
+"SentOn": "2015-05-13T16:23:59.7502134+02:00",
+"InstalledRam": 16384,
+"Domain": "europe.microsoft.com.corp",
+"ComputerName": "CAISSA",
+"Data": [
+{
+"SampleDate": "2015-05-13T16:23:49.7502134+02:00",
+"Properties":
+{
+"CPU": {
+"Value": 23,
+"Average": 45,
+"Max": 100,
+"Min": 3,
+"SampleType": 3
+},
+"UsedRAM":{
+"Value": 2789,
+"Average": 2565,
+"Max": 7881,
+"Min": 1872,
+"SampleType": 3
+}
+,
+"BootDuration":
+{
+"Value": 34,
+"Average": 0,
+"Max": 0,
+"Min": 0,
+"SampleType": 3
+}
+,
+"UpTime":{
+"Value": 25698,
+"Average": 0,
+"Max": 0,
+"Min": 0,
+"SampleType": 3
+}
+,
+"DiskWriteMBPerSecond":
+{
+"Value": 2789.23,
+"Average": 2565.23,
+"Max": 7881.23,
+"Min": 1872.23,
+"SampleType": 0
+}
+,
+"DiskReadMBPerSecond": {
+"Value": 2789.23,
+"Average": 2565.23,
+"Max": 7881.23,
+"Min": 1872.23,
+"SampleType": 0
+},
+"DiskReadLatency":{
+"Value": 2789.23,
+"Average": 2565.23,
+"Max": 7881.23,
+"Min": 1872.23,
+"SampleType": 0
+}
+,
+"DiskWriteLatency":
+{
+"Value": 2789.23,
+"Average": 2565.23,
+"Max": 7881.23,
+"Min": 1872.23,
+"SampleType": 0
+}
+,
+"DiskAverageLatency":{
+"Value": 2789.23,
+"Average": 2565.23,
+"Max": 7881.23,
+"Min": 1872.23,
+"SampleType": 0
+}
+,
+"Proxy":
+{
+"Value": "proxy.com",
+"SampleType": 2
+}
+,
+"LanInformationArray":
+{
+"Array": [
+{
+"InterfaceName": "Ethernet 1",
+"Connected": true,
+"IPAddress": "192.168.10.86",
+"BytesSent": 456456,
+"BytesReceived": 23423,
+"SampleType": 5
+}
+,
+{
+"InterfaceName": "Ethernet 2",
+"Connected": true,
+"IPAddress": "10.1.1.34",
+"BytesSent": 4564564564564566565,
+"BytesReceived": 3544564563,
+"SampleType": 5
+}
+],
+"SampleType": 6
+}
+,
+"SharedResourceArray":
+{
+"Array": [
+{
+"DriveLetter": "Z:",
+"ResourceName": "\\\\server\\drive1",
+"ResponseTime": 245,
+"SampleType": 7
+}
+,
+{
+"DriveLetter": "Y:",
+"ResourceName": "\\\\server\\drive2",
+"ResponseTime": 312,
+"SampleType": 7
+}
+],
+"SampleType": 8
+}
+,
+"SharedServiceInformationArray":
+{
+"Array": [
+{
+"ServiceName": "Lync 2013",
+"ServiceUrl": "http://lyncserver.bancosantander.corp",
+"ResponseTime": 567,
+"SampleType": 9
+}
+,
+{
+"ServiceName": "Exchange 2013",
+"ServiceUrl": "http://exchange.bancosantander.corp",
+"ResponseTime": 278,
+"SampleType": 9
+}
+],
+"SampleType": 10
+}
+,
+"WiFiConnected":
+{
+"Value": true,
+"SampleType": 1
+}
+,
+"WiFiSSID": {
+"Value": "GSNETWLAN01",
+"SampleType": 2
+},
+"WiFiSignalStrength":{
+"Value": 89,
+"Average": 0,
+"Max": 0,
+"Min": 0,
+"SampleType": 3
+}
+,
+"WiFiIPAddress":
+{
+"Value": "10.4.0.56",
+"SampleType": 2
+}
+,
+"WiFiEncryptionAlgorithm":
+{
+"Value": "WPA2",
+"SampleType": 2
+}
+,
+"WiFiProtocol": {
+"Value": "802.11n",
+"SampleType": 2
+},
+"WiFiBytesSent":{
+"Value": 892393945,
+"SampleType": 4
+},
+"WiFiBytesReceived":{
+"Value": 467567567567567,
+"SampleType": 4
+}
+}
+,
+"State": 37,
+"Message": null,
+"ContainsFeedback": false,
+"UserMood": null
+},
+{
+"SampleDate": "2015-05-13T16:23:44.7502134+02:00",
+"Properties":{
+"CPU":{
+"Value": 23,
+"Average": 45,
+"Max": 100,
+"Min": 3,
+"SampleType": 3
+}
+,
+"UsedRAM":
+{
+"Value": 2789,
+"Average": 2565,
+"Max": 7881,
+"Min": 1872,
+"SampleType": 3
+}
+,
+"BootDuration": {
+"Value": 34,
+"Average": 0,
+"Max": 0,
+"Min": 0,
+"SampleType": 3
+},
+"UpTime":{
+"Value": 25698,
+"Average": 0,
+"Max": 0,
+"Min": 0,
+"SampleType": 3
+}
+,
+"DiskWriteMBPerSecond":
+{
+"Value": 2789.23,
+"Average": 2565.23,
+"Max": 7881.23,
+"Min": 1872.23,
+"SampleType": 0
+}
+,
+"DiskReadMBPerSecond":{
+"Value": 2789.23,
+"Average": 2565.23,
+"Max": 7881.23,
+"Min": 1872.23,
+"SampleType": 0
+}
+,
+"DiskReadLatency":
+{
+"Value": 2789.23,
+"Average": 2565.23,
+"Max": 7881.23,
+"Min": 1872.23,
+"SampleType": 0
+}
+,
+"DiskWriteLatency": {
+"Value": 2789.23,
+"Average": 2565.23,
+"Max": 7881.23,
+"Min": 1872.23,
+"SampleType": 0
+},
+"DiskAverageLatency":{
+"Value": 2789.23,
+"Average": 2565.23,
+"Max": 7881.23,
+"Min": 1872.23,
+"SampleType": 0
+}
+,
+"Proxy":
+{
+"Value": "proxy.com",
+"SampleType": 2
+}
+,
+"LanInformationArray": {
+"Array": [
+{
+"InterfaceName": "Ethernet 1",
+"Connected": true,
+"IPAddress": "192.168.10.86",
+"BytesSent": 456456,
+"BytesReceived": 23423,
+"SampleType": 5
+}
+,
+{
+"InterfaceName": "Ethernet 2",
+"Connected": true,
+"IPAddress": "10.1.1.34",
+"BytesSent": 4564564564564566565,
+"BytesReceived": 3544564563,
+"SampleType": 5
+}
+],
+"SampleType": 6
+}
+,
+"SharedResourceArray":
+{
+"Array": [
+{
+"DriveLetter": "Z:",
+"ResourceName": "\\\\server\\drive1",
+"ResponseTime": 245,
+"SampleType": 7
+}
+,
+{
+"DriveLetter": "Y:",
+"ResourceName": "\\\\server\\drive2",
+"ResponseTime": 312,
+"SampleType": 7
+}
+],
+"SampleType": 8
+}
+,
+"SharedServiceInformationArray":
+{
+"Array": [
+{
+"ServiceName": "Lync 2013",
+"ServiceUrl": "http://lyncserver.bancosantander.corp",
+"ResponseTime": 567,
+"SampleType": 9
+}
+,
+{
+"ServiceName": "Exchange 2013",
+"ServiceUrl": "http://exchange.bancosantander.corp",
+"ResponseTime": 278,
+"SampleType": 9
+}
+],
+"SampleType": 10
+}
+,
+"WiFiConnected":
+{
+"Value": true,
+"SampleType": 1
+}
+,
+"WiFiSSID": {
+"Value": "GSNETWLAN01",
+"SampleType": 2
+},
+"WiFiSignalStrength":{
+"Value": 89,
+"Average": 0,
+"Max": 0,
+"Min": 0,
+"SampleType": 3
+}
+,
+"WiFiIPAddress":
+{
+"Value": "10.4.0.56",
+"SampleType": 2
+}
+,
+"WiFiEncryptionAlgorithm":
+{
+"Value": "WPA2",
+"SampleType": 2
+}
+,
+"WiFiProtocol": {
+"Value": "802.11n",
+"SampleType": 2
+},
+"WiFiBytesSent":{
+"Value": 892393945,
+"SampleType": 4
+},
+"WiFiBytesReceived":{
+"Value": 467567567567567,
+"SampleType": 4
+}
+}
+,
+"State": 37,
+"Message": "No me funciona el correo",
+"ContainsFeedback": true,
+"UserMood": "KO"
+}
+]
+}
