@@ -78,11 +78,7 @@ public class KeedioJSONHandler implements HTTPSourceHandler {
 
         MappingIterator<Map<String,Object>> eventList;
         try {
-            long t0 = System.currentTimeMillis();
             eventList = mapper.readValues(jsonParser, new TypeReference<TreeMap<String,Object>>(){});
-            long t1 = System.currentTimeMillis();
-
-            metricsController.manage(new MetricsEvent(PARSE_OK, t1-t0));
         } catch (IOException e) {
             metricsController.manage(new MetricsEvent(JSON_ERROR));
             throw e;
@@ -100,16 +96,21 @@ public class KeedioJSONHandler implements HTTPSourceHandler {
         }
 
         while (eventList.hasNext()){
-            Map<String, Object> e = null;
+            Map<String, Object> event = null;
             try {
-                e = eventList.next();
-            } catch (Exception e1) {
+
+                long t0 = System.currentTimeMillis();
+                event = eventList.next();
+                long t1 = System.currentTimeMillis();
+
+                metricsController.manage(new MetricsEvent(PARSE_OK, t1-t0));
+            } catch (Exception ex) {
                 metricsController.manage(new MetricsEvent(JSON_ERROR));
-                throw e1;
+                throw ex;
             }
 
             long t0 = System.currentTimeMillis();
-            String asString = mapper.writeValueAsString(e);
+            String asString = mapper.writeValueAsString(event);
             long t1 = System.currentTimeMillis();
 
             result.add(EventBuilder.withBody(asString.getBytes(charset), httpHeaders));
