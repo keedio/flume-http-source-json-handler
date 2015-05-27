@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.Reader;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.*;
 
@@ -57,57 +58,15 @@ public class KeedioJSONHandler implements HTTPSourceHandler {
 
         metricsController.manage(new MetricsEvent(JSON_ARRIVED));
 
-        if (charset == null) {
-            LOG.debug("Charset is null, default charset of UTF-8 will be used.");
+        charset = validateCharset(charset);
 
-            charset = "UTF-8";
-        } else if (!(charset.equalsIgnoreCase("utf-8")
-                || charset.equalsIgnoreCase("utf-16")
-                || charset.equalsIgnoreCase("utf-32"))) {
+        MappingIterator<Map<String, Object>> eventList = getMappingIterator(reader);
 
-            LOG.error("Unsupported character set in request {}. "
-                    + "JSON handler supports UTF-8, "
-                    + "UTF-16 and UTF-32 only.", charset);
-
-            metricsController.manage(new MetricsEvent(JSON_ERROR));
-            throw new UnsupportedCharsetException("JSON handler supports UTF-8, "
-                    + "UTF-16 and UTF-32 only.");
-        }
-
-        JsonParser jsonParser = jsonFactory.createJsonParser(reader);
-
-        MappingIterator<Map<String,Object>> eventList;
-        try {
-            eventList = mapper.readValues(jsonParser, new TypeReference<TreeMap<String,Object>>(){});
-        } catch (IOException e) {
-            metricsController.manage(new MetricsEvent(JSON_ERROR));
-            throw e;
-        }
+        Map<String, String> httpHeaders = extractHTTPHeaders(request);
 
         List<Event> result = new ArrayList<>();
-
-        Map<String, String> httpHeaders = new HashMap<>();
-
-        Enumeration<String> headerNames = request.getHeaderNames();
-
-        while (headerNames.hasMoreElements()) {
-            String hName = headerNames.nextElement();
-            httpHeaders.put(hName, request.getHeader(hName));
-        }
-
         while (eventList.hasNext()){
-            Map<String, Object> event = null;
-            try {
-
-                long t0 = System.currentTimeMillis();
-                event = eventList.next();
-                long t1 = System.currentTimeMillis();
-
-                metricsController.manage(new MetricsEvent(PARSE_OK, t1-t0));
-            } catch (Exception ex) {
-                metricsController.manage(new MetricsEvent(JSON_ERROR));
-                throw ex;
-            }
+            Map<String, Object> event = parseNextEvent(eventList);
 
             long t0 = System.currentTimeMillis();
             String asString = mapper.writeValueAsString(event);
@@ -119,6 +78,92 @@ public class KeedioJSONHandler implements HTTPSourceHandler {
         }
 
         return result;
+    }
+
+    /**
+     * Parses a new event extracted from the HTTP request.
+     *
+     * @param eventList the iterator of parsed JSONs extracted from the HTTP request.
+     *
+     * @return the parsed event.
+     */
+    private Map<String, Object> parseNextEvent(MappingIterator<Map<String, Object>> eventList) {
+        Map<String, Object> event = null;
+        try {
+
+            long t0 = System.currentTimeMillis();
+            event = eventList.next();
+            long t1 = System.currentTimeMillis();
+
+            metricsController.manage(new MetricsEvent(PARSE_OK, t1-t0));
+        } catch (Exception ex) {
+            metricsController.manage(new MetricsEvent(JSON_ERROR));
+            throw ex;
+        }
+        return event;
+    }
+
+    /**
+     * Extracts HTTP headers for later usage.
+     *
+     * @param request the http servlet request.
+     * @return the parsed HTTP header map
+     */
+    private Map<String, String> extractHTTPHeaders(HttpServletRequest request) {
+        Map<String, String> httpHeaders = new HashMap<>();
+
+        Enumeration<String> headerNames = request.getHeaderNames();
+
+        while (headerNames.hasMoreElements()) {
+            String hName = headerNames.nextElement();
+            httpHeaders.put(hName, request.getHeader(hName));
+        }
+        return httpHeaders;
+    }
+
+    /**
+     * Returns an iterator over the jsons contained in the request.
+     *
+     * @param reader the buffered reader extracted from the HTTP servlet request.
+     *
+     * @return an iterator over the parsed JSONs.
+     * @throws IOException
+     */
+    private MappingIterator<Map<String, Object>> getMappingIterator(Reader reader) throws IOException {
+        JsonParser jsonParser = jsonFactory.createJsonParser(reader);
+        MappingIterator<Map<String,Object>> eventList;
+        try {
+            eventList = mapper.readValues(jsonParser, new TypeReference<TreeMap<String,Object>>(){});
+        } catch (IOException e) {
+            metricsController.manage(new MetricsEvent(JSON_ERROR));
+            throw e;
+        }
+        return eventList;
+    }
+
+    /**
+     * Validates the provided charset is supported.
+     *
+     * @param charset the charset to validate.
+     * @return the normilized charset
+     * @throws UnsupportedCharsetException if the provided charset could not be used.
+     */
+    private String validateCharset(String charset) {
+        if (charset == null) {
+            LOG.debug("Charset is null, default charset of UTF-8 will be used.");
+
+            charset = "UTF-8";
+        } else if (!("utf-8".equalsIgnoreCase(charset)
+                || "utf-16".equalsIgnoreCase(charset)
+                || "utf-32".equalsIgnoreCase(charset))) {
+
+            LOG.error("Unsupported character set in request {}. JSON handler supports UTF-8, UTF-16 and UTF-32 only.",
+                    charset);
+
+            metricsController.manage(new MetricsEvent(JSON_ERROR));
+            throw new UnsupportedCharsetException("JSON handler supports UTF-8, UTF-16 and UTF-32 only.");
+        }
+        return charset;
     }
 
     /**
