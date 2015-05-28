@@ -72,6 +72,8 @@ public class KeedioJSONHandler implements HTTPSourceHandler {
             String asString = mapper.writeValueAsString(event);
             long t1 = System.currentTimeMillis();
 
+            LOG.trace(asString);
+
             result.add(EventBuilder.withBody(asString.getBytes(charset), httpHeaders));
 
             metricsController.manage(new MetricsEvent(EVENT_GENERATION, t1-t0));
