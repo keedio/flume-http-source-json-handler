@@ -6,12 +6,12 @@
 
     <groupId>com.keedio.flume.source.http.json.handler</groupId>
     <artifactId>flume-http-source-json-handler</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
-        <flume.version>1.5.2</flume.version>
+        <flume.version>1.5.2_keedio</flume.version>
         <jackson.version>1.9.13</jackson.version>
     </properties>
 
