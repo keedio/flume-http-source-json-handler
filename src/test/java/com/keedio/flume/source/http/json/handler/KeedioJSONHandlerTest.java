@@ -134,10 +134,10 @@ public class KeedioJSONHandlerTest {
         assertEquals("Mozilla/5.0",event.getHeaders().get("User-Agent"));
 
         ArgumentCaptor<MetricsEvent> captor =  ArgumentCaptor.forClass(MetricsEvent.class);
-        verify(handler.metricsController, times(3)).manage(captor.capture());
+        verify(handler.metricsController, times(4)).manage(captor.capture());
 
         for (MetricsEvent e: captor.getAllValues()){
-            assertTrue(e.getCode() == JSON_ARRIVED || e.getCode() == PARSE_OK | e.getCode() == EVENT_GENERATION);
+            assertTrue(e.getCode() == JSON_ARRIVED || e.getCode() == PARSE_OK | e.getCode() == EVENT_GENERATION| e.getCode() == EVENT_SIZE);
 
             if (e.getCode() == EVENT_GENERATION || e.getCode() == PARSE_OK){
                 assertNotNull(e.getValue());
@@ -168,10 +168,11 @@ public class KeedioJSONHandlerTest {
         }
 
         ArgumentCaptor<MetricsEvent> captor =  ArgumentCaptor.forClass(MetricsEvent.class);
-        verify(handler.metricsController, times(3+2)).manage(captor.capture());
+        verify(handler.metricsController, times(3+4)).manage(captor.capture());
 
         for (MetricsEvent e: captor.getAllValues()){
-            assertTrue(e.getCode() == JSON_ARRIVED || e.getCode() == PARSE_OK | e.getCode() == EVENT_GENERATION);
+            assertTrue(e.getCode() == JSON_ARRIVED || e.getCode() == PARSE_OK | e.getCode() == EVENT_GENERATION
+                    | e.getCode() == EVENT_SIZE);
 
             if (e.getCode() == EVENT_GENERATION || e.getCode() == PARSE_OK){
                 assertNotNull(e.getValue());

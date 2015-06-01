@@ -20,6 +20,7 @@ public class MetricsController extends MonitoredCounterGroup implements MetricsM
     Meter jsonError;
     Histogram requestParseTime;
     Histogram eventGenerationTime;
+    Histogram eventSize;
 
     private MetricRegistry metrics;
 
@@ -46,7 +47,14 @@ public class MetricsController extends MonitoredCounterGroup implements MetricsM
             "httpsourcehandler.meter.eventGenerationTime.min",
             "httpsourcehandler.meter.eventGenerationTime.95ThPercentile",
             "httpsourcehandler.meter.eventGenerationTime.99ThPercentile",
-            "httpsourcehandler.meter.eventGenerationTime.stddev"
+            "httpsourcehandler.meter.eventGenerationTime.stddev",
+
+            "httpsourcehandler.meter.eventSize.mean",
+            "httpsourcehandler.meter.eventSize.max",
+            "httpsourcehandler.meter.eventSize.min",
+            "httpsourcehandler.meter.eventSize.95ThPercentile",
+            "httpsourcehandler.meter.eventSize.99ThPercentile",
+            "httpsourcehandler.meter.eventSize.stddev"
     };
 
 
@@ -61,6 +69,7 @@ public class MetricsController extends MonitoredCounterGroup implements MetricsM
         jsonError = metrics.meter("jsonError");
         requestParseTime = metrics.histogram("requestParseTime");
         eventGenerationTime = metrics.histogram("eventGenerationTime");
+        eventSize = metrics.histogram("eventSize");
     }
 
     /**
@@ -85,7 +94,9 @@ public class MetricsController extends MonitoredCounterGroup implements MetricsM
             case PARSE_OK:
                 requestParseTime.update(event.getValue());
                 break;
-
+            case EVENT_SIZE:
+                eventSize.update(event.getValue());
+                break;
             case EVENT_GENERATION:
                 eventGenerationTime.update(event.getValue());
                 break;
@@ -253,5 +264,35 @@ public class MetricsController extends MonitoredCounterGroup implements MetricsM
     @Override
     public double eventGenerationTimeStdDev() {
         return eventGenerationTime.getSnapshot().getStdDev();
+    }
+
+    @Override
+    public double eventSizeTimeMean() {
+        return eventSize.getSnapshot().getMean();
+    }
+
+    @Override
+    public long eventSizeTimeMax() {
+        return eventSize.getSnapshot().getMax();
+    }
+
+    @Override
+    public long eventSizeTimeMin() {
+        return eventSize.getSnapshot().getMin();
+    }
+
+    @Override
+    public double eventSizeTime95ThPercentile() {
+        return eventSize.getSnapshot().get95thPercentile();
+    }
+
+    @Override
+    public double eventSizeTime99ThPercentile() {
+        return eventSize.getSnapshot().get99thPercentile();
+    }
+
+    @Override
+    public double eventSizeTimeStdDev() {
+        return eventSize.getSnapshot().getStdDev();
     }
 }
