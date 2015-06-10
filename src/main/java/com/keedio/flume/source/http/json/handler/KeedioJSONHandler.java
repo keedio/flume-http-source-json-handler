@@ -175,7 +175,6 @@ public class KeedioJSONHandler implements HTTPSourceHandler {
     public void configure(Context context) {
         mapper = new ObjectMapper();
         jsonFactory = new JsonFactory();
-        metricsController.start();
     }
 
     /**

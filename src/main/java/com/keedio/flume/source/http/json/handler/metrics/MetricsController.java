@@ -1,6 +1,7 @@
 package com.keedio.flume.source.http.json.handler.metrics;
 
 import com.codahale.metrics.Histogram;
+import com.codahale.metrics.JmxReporter;
 import com.codahale.metrics.Meter;
 import com.codahale.metrics.MetricRegistry;
 import org.apache.flume.instrumentation.MonitoredCounterGroup;
@@ -13,7 +14,7 @@ import org.apache.log4j.Logger;
  *
  * Created by Luca Rosellini <lrosellini@keedio.com> on 26/5/15.
  */
-public class MetricsController extends MonitoredCounterGroup implements MetricsMBean {
+public class MetricsController /*extends MonitoredCounterGroup*/ implements MetricsMBean {
     private static Logger logger = Logger.getLogger(MetricsController.class);
 
     Meter receivedJsons;
@@ -62,7 +63,7 @@ public class MetricsController extends MonitoredCounterGroup implements MetricsM
      * Default constructor.
      */
     public MetricsController() {
-        super(Type.OTHER, MetricsController.class.getName(), ATTRIBUTES);
+        //super(Type.SOURCE, MetricsController.class.getName(), ATTRIBUTES);
         metrics = new MetricRegistry();
 
         receivedJsons = metrics.meter("receivedJsons");
@@ -70,6 +71,8 @@ public class MetricsController extends MonitoredCounterGroup implements MetricsM
         requestParseTime = metrics.histogram("requestParseTime");
         eventGenerationTime = metrics.histogram("eventGenerationTime");
         eventSize = metrics.histogram("eventSize");
+
+        JmxReporter.forRegistry(metrics).build().start();
     }
 
     /**
