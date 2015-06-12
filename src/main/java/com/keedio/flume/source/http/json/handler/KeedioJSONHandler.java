@@ -59,7 +59,7 @@ public class KeedioJSONHandler implements HTTPSourceHandler {
         metricsController.manage(new MetricsEvent(JSON_ARRIVED));
 
         charset = validateCharset(charset);
-
+        long t0 = System.currentTimeMillis();
         MappingIterator<Map<String, Object>> eventList = getMappingIterator(reader);
 
         Map<String, String> httpHeaders = extractHTTPHeaders(request);
@@ -68,16 +68,16 @@ public class KeedioJSONHandler implements HTTPSourceHandler {
         while (eventList.hasNext()){
             Map<String, Object> event = parseNextEvent(eventList);
 
-            long t0 = System.currentTimeMillis();
             String asString = mapper.writeValueAsString(event);
-            long t1 = System.currentTimeMillis();
 
             LOG.trace(asString);
 
             result.add(EventBuilder.withBody(asString.getBytes(charset), httpHeaders));
             metricsController.manage(new MetricsEvent(EVENT_SIZE, asString.length()));
-            metricsController.manage(new MetricsEvent(EVENT_GENERATION, t1-t0));
         }
+
+        long t1 = System.currentTimeMillis();
+        metricsController.manage(new MetricsEvent(EVENT_GENERATION, t1-t0));
 
         return result;
     }

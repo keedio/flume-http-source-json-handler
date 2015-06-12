@@ -168,7 +168,7 @@ public class KeedioJSONHandlerTest {
         }
 
         ArgumentCaptor<MetricsEvent> captor =  ArgumentCaptor.forClass(MetricsEvent.class);
-        verify(handler.metricsController, times(3+4)).manage(captor.capture());
+        verify(handler.metricsController, times(6)).manage(captor.capture());
 
         for (MetricsEvent e: captor.getAllValues()){
             assertTrue(e.getCode() == JSON_ARRIVED || e.getCode() == PARSE_OK | e.getCode() == EVENT_GENERATION
