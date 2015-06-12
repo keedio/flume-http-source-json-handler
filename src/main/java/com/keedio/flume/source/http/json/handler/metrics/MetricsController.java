@@ -1,11 +1,10 @@
 package com.keedio.flume.source.http.json.handler.metrics;
 
-import com.codahale.metrics.Histogram;
-import com.codahale.metrics.JmxReporter;
-import com.codahale.metrics.Meter;
-import com.codahale.metrics.MetricRegistry;
+import com.codahale.metrics.*;
 import org.apache.flume.instrumentation.MonitoredCounterGroup;
 import org.apache.log4j.Logger;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * This class represents the controller metrics to publish to the source.
@@ -19,8 +18,8 @@ public class MetricsController /*extends MonitoredCounterGroup*/ implements Metr
 
     Meter receivedJsons;
     Meter jsonError;
-    Histogram requestParseTime;
-    Histogram eventGenerationTime;
+    Timer requestParseTime;
+    Timer eventGenerationTime;
     Histogram eventSize;
 
     private MetricRegistry metrics;
@@ -68,8 +67,8 @@ public class MetricsController /*extends MonitoredCounterGroup*/ implements Metr
 
         receivedJsons = metrics.meter("receivedJsons");
         jsonError = metrics.meter("jsonError");
-        requestParseTime = metrics.histogram("requestParseTime");
-        eventGenerationTime = metrics.histogram("eventGenerationTime");
+        requestParseTime = metrics.timer("requestParseTime");
+        eventGenerationTime = metrics.timer("eventGenerationTime");
         eventSize = metrics.histogram("eventSize");
 
         JmxReporter.forRegistry(metrics).build().start();
@@ -95,13 +94,13 @@ public class MetricsController /*extends MonitoredCounterGroup*/ implements Metr
                 jsonError.mark();
                 break;
             case PARSE_OK:
-                requestParseTime.update(event.getValue());
+                requestParseTime.update(event.getValue(), TimeUnit.NANOSECONDS);
                 break;
             case EVENT_SIZE:
                 eventSize.update(event.getValue());
                 break;
             case EVENT_GENERATION:
-                eventGenerationTime.update(event.getValue());
+                eventGenerationTime.update(event.getValue(), TimeUnit.NANOSECONDS);
                 break;
             default:
                 logger.warn("EventType '"+event.getCode()+"' not recognized");
