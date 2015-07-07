@@ -1,7 +1,6 @@
 package com.keedio.flume.source.http.json.handler.metrics;
 
 import com.codahale.metrics.*;
-import org.apache.flume.instrumentation.MonitoredCounterGroup;
 import org.apache.log4j.Logger;
 
 import java.util.concurrent.TimeUnit;

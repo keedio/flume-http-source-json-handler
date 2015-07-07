@@ -75,5 +75,22 @@
             <version>1.9.5</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.github.lucarosellini</groupId>
+            <artifactId>kafka.kryo.codec</artifactId>
+            <version>1.0.8-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.scala-lang.modules</groupId>
+            <artifactId>scala-pickling_2.10</artifactId>
+            <version>0.10.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.json4s</groupId>
+            <artifactId>json4s-jackson_2.10</artifactId>
+            <version>3.2.10</version>
+        </dependency>
+
     </dependencies>
 </project>

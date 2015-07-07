@@ -2,6 +2,7 @@ package com.keedio.flume.source.http.json.handler;
 
 import com.keedio.flume.source.http.json.handler.metrics.MetricsController;
 import com.keedio.flume.source.http.json.handler.metrics.MetricsEvent;
+import kafka.kryo.JValueKryoEncoder;
 import org.apache.flume.Context;
 import org.apache.flume.Event;
 import org.apache.flume.event.EventBuilder;
@@ -11,15 +12,17 @@ import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.map.MappingIterator;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
+import org.json4s.JsonAST;
+import org.json4s.StringInput;
+import org.json4s.jackson.JsonMethods$;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.*;
+import scala.pickling.Defaults$.*;
 
 import static com.keedio.flume.source.http.json.handler.metrics.MetricsEvent.EventType.*;
 
@@ -69,10 +72,9 @@ public class KeedioJSONHandler implements HTTPSourceHandler {
             Map<String, Object> event = parseNextEvent(eventList);
 
             String asString = mapper.writeValueAsString(event);
+            JsonAST.JValue jval = JsonMethods$.MODULE$.parse(new StringInput(asString),false);
 
-            LOG.trace(asString);
-
-            result.add(EventBuilder.withBody(asString.getBytes(charset), httpHeaders));
+            result.add(EventBuilder.withBody(serializeJValue(jval), httpHeaders));
             metricsController.manage(new MetricsEvent(EVENT_SIZE, asString.length()));
         }
 
@@ -80,6 +82,20 @@ public class KeedioJSONHandler implements HTTPSourceHandler {
         metricsController.manage(new MetricsEvent(EVENT_GENERATION, t1-t0));
 
         return result;
+    }
+
+    private byte[] serializeJValue(JsonAST.JValue jval){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try (ObjectOutputStream oos = new ObjectOutputStream(baos)) {
+            oos.writeObject(jval);
+
+            return baos.toByteArray();
+
+        } catch (IOException e) {
+            LOG.error("Exception", e);
+
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -136,6 +152,7 @@ public class KeedioJSONHandler implements HTTPSourceHandler {
         MappingIterator<Map<String,Object>> eventList;
         try {
             eventList = mapper.readValues(jsonParser, new TypeReference<TreeMap<String,Object>>(){});
+
         } catch (IOException e) {
             metricsController.manage(new MetricsEvent(JSON_ERROR));
             throw e;
