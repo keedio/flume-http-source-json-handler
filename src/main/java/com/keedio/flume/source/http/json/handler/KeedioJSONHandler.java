@@ -2,7 +2,6 @@ package com.keedio.flume.source.http.json.handler;
 
 import com.keedio.flume.source.http.json.handler.metrics.MetricsController;
 import com.keedio.flume.source.http.json.handler.metrics.MetricsEvent;
-import kafka.kryo.JValueKryoEncoder;
 import org.apache.flume.Context;
 import org.apache.flume.Event;
 import org.apache.flume.event.EventBuilder;
@@ -15,6 +14,7 @@ import org.codehaus.jackson.type.TypeReference;
 import org.json4s.JsonAST;
 import org.json4s.StringInput;
 import org.json4s.jackson.JsonMethods$;
+import org.keedio.kafka.serializers.JValueEncoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,7 +22,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.*;
-import scala.pickling.Defaults$.*;
 
 import static com.keedio.flume.source.http.json.handler.metrics.MetricsEvent.EventType.*;
 
@@ -45,6 +44,7 @@ public class KeedioJSONHandler implements HTTPSourceHandler {
 
     private JsonFactory jsonFactory;
     MetricsController metricsController;
+    private JValueEncoder encoder = new JValueEncoder();
 
     /**
      * {@inheritDoc}
@@ -74,7 +74,7 @@ public class KeedioJSONHandler implements HTTPSourceHandler {
             String asString = mapper.writeValueAsString(event);
             JsonAST.JValue jval = JsonMethods$.MODULE$.parse(new StringInput(asString),false);
 
-            result.add(EventBuilder.withBody(serializeJValue(jval), httpHeaders));
+            result.add(EventBuilder.withBody(encoder.toBytes(jval), httpHeaders));
             metricsController.manage(new MetricsEvent(EVENT_SIZE, asString.length()));
         }
 
@@ -82,20 +82,6 @@ public class KeedioJSONHandler implements HTTPSourceHandler {
         metricsController.manage(new MetricsEvent(EVENT_GENERATION, t1-t0));
 
         return result;
-    }
-
-    private byte[] serializeJValue(JsonAST.JValue jval){
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try (ObjectOutputStream oos = new ObjectOutputStream(baos)) {
-            oos.writeObject(jval);
-
-            return baos.toByteArray();
-
-        } catch (IOException e) {
-            LOG.error("Exception", e);
-
-            throw new RuntimeException(e);
-        }
     }
 
     /**
