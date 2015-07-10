@@ -1,11 +1,13 @@
 package com.keedio.flume.source.http.json.handler.metrics;
 
-import com.codahale.metrics.Histogram;
 import com.codahale.metrics.Meter;
 import com.codahale.metrics.Snapshot;
+import com.codahale.metrics.Timer;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+
+import java.util.concurrent.TimeUnit;
 
 import static com.keedio.flume.source.http.json.handler.metrics.MetricsEvent.EventType.*;
 import static org.junit.Assert.assertEquals;
@@ -23,8 +25,8 @@ public class MetricsControllerTest {
 
         controller.receivedJsons = mock(Meter.class);
         controller.jsonError = mock(Meter.class);
-        controller.requestParseTime = mock(Histogram.class);
-        controller.eventGenerationTime = mock(Histogram.class);
+        controller.requestParseTime = mock(Timer.class);
+        controller.eventGenerationTime = mock(Timer.class);
     }
 
     @Test
@@ -48,7 +50,7 @@ public class MetricsControllerTest {
 
         MetricsEvent event = new MetricsEvent(PARSE_OK, processTime);
         controller.manage(event);
-        verify(controller.requestParseTime, times(1)).update(valueCaptor.capture());
+        verify(controller.requestParseTime, times(1)).update(valueCaptor.capture(), any(TimeUnit.class));
 
         assertEquals(processTime, valueCaptor.getValue());
     }
@@ -60,7 +62,7 @@ public class MetricsControllerTest {
 
         MetricsEvent event = new MetricsEvent(EVENT_GENERATION, processTime);
         controller.manage(event);
-        verify(controller.eventGenerationTime, times(1)).update(valueCaptor.capture());
+        verify(controller.eventGenerationTime, times(1)).update(valueCaptor.capture(), any(TimeUnit.class));
 
         assertEquals(processTime, valueCaptor.getValue());
     }
@@ -71,8 +73,8 @@ public class MetricsControllerTest {
         controller.manage(event);
         verify(controller.receivedJsons, times(0)).mark();
         verify(controller.jsonError, times(0)).mark();
-        verify(controller.requestParseTime, times(0)).update(anyLong());
-        verify(controller.eventGenerationTime, times(0)).update(anyLong());
+        verify(controller.requestParseTime, times(0)).update(anyLong(), any(TimeUnit.class));
+        verify(controller.eventGenerationTime, times(0)).update(anyLong(), any(TimeUnit.class));
     }
 
     @Test

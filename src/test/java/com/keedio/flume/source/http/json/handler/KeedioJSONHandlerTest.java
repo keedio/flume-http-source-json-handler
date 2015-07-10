@@ -27,6 +27,7 @@ import static org.mockito.Mockito.*;
  */
 public class KeedioJSONHandlerTest {
 
+    private static final String SCHEMA_PATH = "src/test/resources/schema";
     private KeedioJSONHandler handler;
     private HttpServletRequest mockRequest;
 
@@ -34,7 +35,7 @@ public class KeedioJSONHandlerTest {
 
     @Before
     public void setup() throws IOException {
-        reader = new BufferedReader(new FileReader("src/main/resources/schema/example-widget.json"));
+        reader = new BufferedReader(new FileReader(SCHEMA_PATH + "/example-widget.json"));
 
         handler = new KeedioJSONHandler();
         handler.metricsController = mock(MetricsController.class);
@@ -97,7 +98,7 @@ public class KeedioJSONHandlerTest {
 
     @Test(expected = RuntimeException.class)
     public void testInvalidJson() throws IOException {
-        reader = new BufferedReader(new FileReader("src/main/resources/schema/example-widget-invalid.json"));
+        reader = new BufferedReader(new FileReader(SCHEMA_PATH + "/example-widget-invalid.json"));
 
         assertNotNull(reader);
 
@@ -114,7 +115,7 @@ public class KeedioJSONHandlerTest {
 
     @Test
     public void testSingleJson() throws IOException {
-        reader = new BufferedReader(new FileReader("src/main/resources/schema/example-widget.json"));
+        reader = new BufferedReader(new FileReader(SCHEMA_PATH + "/example-widget.json"));
 
         assertNotNull(reader);
 
@@ -133,10 +134,10 @@ public class KeedioJSONHandlerTest {
         assertEquals("Mozilla/5.0",event.getHeaders().get("User-Agent"));
 
         ArgumentCaptor<MetricsEvent> captor =  ArgumentCaptor.forClass(MetricsEvent.class);
-        verify(handler.metricsController, times(3)).manage(captor.capture());
+        verify(handler.metricsController, times(4)).manage(captor.capture());
 
         for (MetricsEvent e: captor.getAllValues()){
-            assertTrue(e.getCode() == JSON_ARRIVED || e.getCode() == PARSE_OK | e.getCode() == EVENT_GENERATION);
+            assertTrue(e.getCode() == JSON_ARRIVED || e.getCode() == PARSE_OK | e.getCode() == EVENT_GENERATION| e.getCode() == EVENT_SIZE);
 
             if (e.getCode() == EVENT_GENERATION || e.getCode() == PARSE_OK){
                 assertNotNull(e.getValue());
@@ -147,7 +148,7 @@ public class KeedioJSONHandlerTest {
 
     @Test
     public void testMultipleJson() throws IOException {
-        reader = new BufferedReader(new FileReader("src/main/resources/schema/example-widget-multiple.json"));
+        reader = new BufferedReader(new FileReader(SCHEMA_PATH + "/example-widget-multiple.json"));
 
         assertNotNull(reader);
 
@@ -167,10 +168,11 @@ public class KeedioJSONHandlerTest {
         }
 
         ArgumentCaptor<MetricsEvent> captor =  ArgumentCaptor.forClass(MetricsEvent.class);
-        verify(handler.metricsController, times(3+1)).manage(captor.capture());
+        verify(handler.metricsController, times(6)).manage(captor.capture());
 
         for (MetricsEvent e: captor.getAllValues()){
-            assertTrue(e.getCode() == JSON_ARRIVED || e.getCode() == PARSE_OK | e.getCode() == EVENT_GENERATION);
+            assertTrue(e.getCode() == JSON_ARRIVED || e.getCode() == PARSE_OK | e.getCode() == EVENT_GENERATION
+                    | e.getCode() == EVENT_SIZE);
 
             if (e.getCode() == EVENT_GENERATION || e.getCode() == PARSE_OK){
                 assertNotNull(e.getValue());

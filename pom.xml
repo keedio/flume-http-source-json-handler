@@ -6,12 +6,12 @@
 
     <groupId>com.keedio.flume.source.http.json.handler</groupId>
     <artifactId>flume-http-source-json-handler</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.7</version>
 
     <properties>
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
-        <flume.version>1.5.2</flume.version>
+        <flume.version>1.5.2_keedio</flume.version>
         <jackson.version>1.9.13</jackson.version>
     </properties>
 
@@ -44,11 +44,13 @@
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-core-asl</artifactId>
             <version>${jackson.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-mapper-asl</artifactId>
             <version>${jackson.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -60,12 +62,31 @@
             <groupId>io.dropwizard.metrics</groupId>
             <artifactId>metrics-core</artifactId>
             <version>3.1.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
             <version>1.9.5</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.keedio.kafka.serializers</groupId>
+            <artifactId>kafka-json4s-codecs</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka_2.10</artifactId>
+            <version>0.8.1.1</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

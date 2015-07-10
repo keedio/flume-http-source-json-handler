@@ -105,4 +105,34 @@ public interface MetricsMBean {
      * @return standard deviation of the time taken to transform a parsed json to a flume Event.
      */
     double eventGenerationTimeStdDev();
+
+    /**
+     * @return mean event size received.
+     */
+    double eventSizeTimeMean();
+
+    /**
+     * @return max event size received.
+     */
+    long eventSizeTimeMax();
+
+    /**
+     * @return min event size received.
+     */
+    long eventSizeTimeMin();
+
+    /**
+     * @return 95th percentile size of the events received.
+     */
+    double eventSizeTime95ThPercentile();
+
+    /**
+     * @return 99th percentile size of the events received.
+     */
+    double eventSizeTime99ThPercentile();
+
+    /**
+     * @return std dev percentile size of the events received.
+     */
+    double eventSizeTimeStdDev();
 }

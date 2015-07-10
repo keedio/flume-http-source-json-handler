@@ -5,7 +5,7 @@ package com.keedio.flume.source.http.json.handler.metrics;
  */
 public class MetricsEvent {
     public enum EventType{
-        JSON_ARRIVED,JSON_ERROR,PARSE_OK,EVENT_GENERATION, UNKNOWN;
+        JSON_ARRIVED,JSON_ERROR,PARSE_OK,EVENT_GENERATION,EVENT_SIZE,UNKNOWN;
     }
 
     private long value;
