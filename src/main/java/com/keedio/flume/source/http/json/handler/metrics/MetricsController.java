@@ -3,7 +3,10 @@ package com.keedio.flume.source.http.json.handler.metrics;
 import com.codahale.metrics.*;
 import org.apache.log4j.Logger;
 
+import javax.management.ObjectName;
 import java.util.concurrent.TimeUnit;
+
+import static javax.management.ObjectName.*;
 
 /**
  * This class represents the controller metrics to publish to the source.
@@ -20,6 +23,7 @@ public class MetricsController /*extends MonitoredCounterGroup*/ implements Metr
     Timer requestParseTime;
     Timer eventGenerationTime;
     Histogram eventSize;
+    Histogram jsonsPerRequest;
 
     private MetricRegistry metrics;
 
@@ -53,7 +57,14 @@ public class MetricsController /*extends MonitoredCounterGroup*/ implements Metr
             "httpsourcehandler.meter.eventSize.min",
             "httpsourcehandler.meter.eventSize.95ThPercentile",
             "httpsourcehandler.meter.eventSize.99ThPercentile",
-            "httpsourcehandler.meter.eventSize.stddev"
+            "httpsourcehandler.meter.eventSize.stddev",
+
+            "httpsourcehandler.meter.jsonsPerRequest.mean",
+            "httpsourcehandler.meter.jsonsPerRequest.max",
+            "httpsourcehandler.meter.jsonsPerRequest.min",
+            "httpsourcehandler.meter.jsonsPerRequest.95ThPercentile",
+            "httpsourcehandler.meter.jsonsPerRequest.99ThPercentile",
+            "httpsourcehandler.meter.jsonsPerRequest.stddev"
     };
 
 
@@ -61,7 +72,8 @@ public class MetricsController /*extends MonitoredCounterGroup*/ implements Metr
      * Default constructor.
      */
     public MetricsController() {
-        //super(Type.SOURCE, MetricsController.class.getName(), ATTRIBUTES);
+        final String domainName = MetricRegistry.name(MetricsController.class);
+
         metrics = new MetricRegistry();
 
         receivedJsons = metrics.meter("receivedJsons");
@@ -69,8 +81,11 @@ public class MetricsController /*extends MonitoredCounterGroup*/ implements Metr
         requestParseTime = metrics.timer("requestParseTime");
         eventGenerationTime = metrics.timer("eventGenerationTime");
         eventSize = metrics.histogram("eventSize");
+        jsonsPerRequest = metrics.histogram("jsonsPerRequest");
 
-        JmxReporter.forRegistry(metrics).build().start();
+        JmxReporter.forRegistry(metrics)
+                    .inDomain(domainName)
+                    .build().start();
     }
 
     /**
@@ -100,6 +115,9 @@ public class MetricsController /*extends MonitoredCounterGroup*/ implements Metr
                 break;
             case EVENT_GENERATION:
                 eventGenerationTime.update(event.getValue(), TimeUnit.NANOSECONDS);
+                break;
+            case NJSONS_ARRIVED:
+                jsonsPerRequest.update(event.getValue());
                 break;
             default:
                 logger.warn("EventType '"+event.getCode()+"' not recognized");
@@ -268,32 +286,63 @@ public class MetricsController /*extends MonitoredCounterGroup*/ implements Metr
     }
 
     @Override
-    public double eventSizeTimeMean() {
+    public double eventSizeMean() {
         return eventSize.getSnapshot().getMean();
     }
 
     @Override
-    public long eventSizeTimeMax() {
+    public long eventSizeMax() {
         return eventSize.getSnapshot().getMax();
     }
 
     @Override
-    public long eventSizeTimeMin() {
+    public long eventSizeMin() {
         return eventSize.getSnapshot().getMin();
     }
 
     @Override
-    public double eventSizeTime95ThPercentile() {
+    public double eventSize95ThPercentile() {
         return eventSize.getSnapshot().get95thPercentile();
     }
 
     @Override
-    public double eventSizeTime99ThPercentile() {
+    public double eventSize99ThPercentile() {
         return eventSize.getSnapshot().get99thPercentile();
     }
 
     @Override
-    public double eventSizeTimeStdDev() {
+    public double eventSizeStdDev() {
         return eventSize.getSnapshot().getStdDev();
+    }
+
+/***********************************************************************************************************************/
+    @Override
+    public double jsonsPerRequestMean() {
+    return jsonsPerRequest.getSnapshot().getMean();
+}
+
+    @Override
+    public long jsonsPerRequestMax() {
+        return jsonsPerRequest.getSnapshot().getMax();
+    }
+
+    @Override
+    public long jsonsPerRequestMin() {
+        return jsonsPerRequest.getSnapshot().getMin();
+    }
+
+    @Override
+    public double jsonsPerRequest95ThPercentile() {
+        return jsonsPerRequest.getSnapshot().get95thPercentile();
+    }
+
+    @Override
+    public double jsonsPerRequest99ThPercentile() {
+        return jsonsPerRequest.getSnapshot().get99thPercentile();
+    }
+
+    @Override
+    public double jsonsPerRequestStdDev() {
+        return jsonsPerRequest.getSnapshot().getStdDev();
     }
 }

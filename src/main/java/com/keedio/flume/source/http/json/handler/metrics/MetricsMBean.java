@@ -109,30 +109,63 @@ public interface MetricsMBean {
     /**
      * @return mean event size received.
      */
-    double eventSizeTimeMean();
+    double eventSizeMean();
 
     /**
      * @return max event size received.
      */
-    long eventSizeTimeMax();
+    long eventSizeMax();
 
     /**
      * @return min event size received.
      */
-    long eventSizeTimeMin();
+    long eventSizeMin();
 
     /**
      * @return 95th percentile size of the events received.
      */
-    double eventSizeTime95ThPercentile();
+    double eventSize95ThPercentile();
 
     /**
      * @return 99th percentile size of the events received.
      */
-    double eventSizeTime99ThPercentile();
+    double eventSize99ThPercentile();
 
     /**
      * @return std dev percentile size of the events received.
      */
-    double eventSizeTimeStdDev();
+    double eventSizeStdDev();
+
+    /*****************************************************************************************************************/
+
+    /* RECALL: CHANGE COMMENTS */
+    /**
+     * @return mean event size received.
+     */
+    double jsonsPerRequestMean();
+
+    /**
+     * @return max event size received.
+     */
+    long jsonsPerRequestMax();
+
+    /**
+     * @return min event size received.
+     */
+    long jsonsPerRequestMin();
+
+    /**
+     * @return 95th percentile size of the events received.
+     */
+    double jsonsPerRequest95ThPercentile();
+
+    /**
+     * @return 99th percentile size of the events received.
+     */
+    double jsonsPerRequest99ThPercentile();
+
+    /**
+     * @return std dev percentile size of the events received.
+     */
+    double jsonsPerRequestStdDev();
 }

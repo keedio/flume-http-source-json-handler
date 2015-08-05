@@ -6,7 +6,7 @@
 
     <groupId>com.keedio.flume.source.http.json.handler</groupId>
     <artifactId>flume-http-source-json-handler</artifactId>
-    <version>0.0.8-SNAPSHOT</version>
+    <version>0.0.9-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>1.7</maven.compiler.source>
@@ -44,13 +44,11 @@
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-core-asl</artifactId>
             <version>${jackson.version}</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-mapper-asl</artifactId>
             <version>${jackson.version}</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -78,15 +76,13 @@
         <dependency>
             <groupId>org.keedio.kafka.serializers</groupId>
             <artifactId>kafka-json4s-codecs</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>provided</scope>
+            <version>0.0.1</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.kafka</groupId>
             <artifactId>kafka_2.10</artifactId>
             <version>0.8.1.1</version>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

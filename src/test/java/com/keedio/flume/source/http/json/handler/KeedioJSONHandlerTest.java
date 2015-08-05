@@ -20,6 +20,7 @@ import java.util.Vector;
 
 import static com.keedio.flume.source.http.json.handler.metrics.MetricsEvent.EventType.*;
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 /**
@@ -134,14 +135,20 @@ public class KeedioJSONHandlerTest {
         assertEquals("Mozilla/5.0",event.getHeaders().get("User-Agent"));
 
         ArgumentCaptor<MetricsEvent> captor =  ArgumentCaptor.forClass(MetricsEvent.class);
-        verify(handler.metricsController, times(4)).manage(captor.capture());
+        verify(handler.metricsController, times(5)).manage(captor.capture());
 
         for (MetricsEvent e: captor.getAllValues()){
-            assertTrue(e.getCode() == JSON_ARRIVED || e.getCode() == PARSE_OK | e.getCode() == EVENT_GENERATION| e.getCode() == EVENT_SIZE);
+            assertTrue(e.getCode() == JSON_ARRIVED || e.getCode() == PARSE_OK || e.getCode() == EVENT_GENERATION
+                    || e.getCode() == EVENT_SIZE || e.getCode() == NJSONS_ARRIVED);
 
             if (e.getCode() == EVENT_GENERATION || e.getCode() == PARSE_OK){
                 assertNotNull(e.getValue());
                 assertTrue(e.getValue() > 0);
+            }
+
+            if (e.getCode() == NJSONS_ARRIVED){
+                assertNotNull(e.getValue());
+                assertEquals(e.getValue(), 1);
             }
         }
     }
@@ -168,15 +175,20 @@ public class KeedioJSONHandlerTest {
         }
 
         ArgumentCaptor<MetricsEvent> captor =  ArgumentCaptor.forClass(MetricsEvent.class);
-        verify(handler.metricsController, times(6)).manage(captor.capture());
+        verify(handler.metricsController, times(7)).manage(captor.capture());
 
         for (MetricsEvent e: captor.getAllValues()){
-            assertTrue(e.getCode() == JSON_ARRIVED || e.getCode() == PARSE_OK | e.getCode() == EVENT_GENERATION
-                    | e.getCode() == EVENT_SIZE);
+            assertTrue(e.getCode() == JSON_ARRIVED || e.getCode() == PARSE_OK || e.getCode() == EVENT_GENERATION
+                    || e.getCode() == EVENT_SIZE || e.getCode() == NJSONS_ARRIVED);
 
             if (e.getCode() == EVENT_GENERATION || e.getCode() == PARSE_OK){
                 assertNotNull(e.getValue());
                 assertTrue(e.getValue() > 0);
+            }
+
+            if (e.getCode() == NJSONS_ARRIVED){
+                assertNotNull(e.getValue());
+                assertEquals(e.getValue(), 2);
             }
         }
     }
