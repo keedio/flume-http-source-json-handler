@@ -3,10 +3,8 @@ package com.keedio.flume.source.http.json.handler.metrics;
 import com.codahale.metrics.*;
 import org.apache.log4j.Logger;
 
-import javax.management.ObjectName;
 import java.util.concurrent.TimeUnit;
 
-import static javax.management.ObjectName.*;
 
 /**
  * This class represents the controller metrics to publish to the source.
