@@ -73,6 +73,9 @@ public class KeedioJSONHandler implements HTTPSourceHandler {
             Map<String, Object> event = parseNextEvent(eventList);
 
             String asString = mapper.writeValueAsString(event);
+
+            LOG.trace(asString);
+
             JsonAST.JValue jval = JsonMethods$.MODULE$.parse(new StringInput(asString),false);
 
             result.add(EventBuilder.withBody(encoder.toBytes(jval), httpHeaders));
